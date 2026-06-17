@@ -3325,6 +3325,28 @@ figcaption {
   grid-column: span 12;
 }
 
+.detail-page .photo-grid .diptych {
+  grid-column: span 12;
+  padding: 0;
+}
+
+.detail-page .diptych-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-page .diptych-images span {
+  min-width: 0;
+  padding: clamp(18px, 2.4vw, 42px);
+  display: grid;
+  place-items: center;
+  border-right: 1px solid var(--line);
+}
+
+.detail-page .diptych-images span:last-child {
+  border-right: 0;
+}
+
 .detail-page .photo-grid img {
   width: auto;
   max-width: 100%;
@@ -3341,6 +3363,15 @@ figcaption {
 
 .detail-page .photo-grid .portrait img {
   max-height: min(72svh, 760px);
+}
+
+.detail-page .photo-grid .diptych img {
+  max-height: min(62svh, 680px);
+}
+
+.detail-page .photo-grid .diptych figcaption {
+  margin: 0;
+  padding: 16px clamp(18px, 2.4vw, 42px);
 }
 
 .detail-page figcaption {
@@ -3487,11 +3518,25 @@ figcaption {
     padding: 20px;
   }
 
-.detail-page .photo-grid img,
-.detail-page .photo-grid .wide img,
-.detail-page .photo-grid .portrait img {
-  max-height: min(68svh, 580px);
-}
+  .detail-page .diptych-images {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-page .diptych-images span {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-page .diptych-images span:last-child {
+    border-bottom: 0;
+  }
+
+  .detail-page .photo-grid img,
+  .detail-page .photo-grid .wide img,
+  .detail-page .photo-grid .portrait img,
+  .detail-page .photo-grid .diptych img {
+    max-height: min(68svh, 580px);
+  }
 
   .work-counter {
     display: none !important;
