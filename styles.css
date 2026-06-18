@@ -51,6 +51,10 @@
     width: min(100%, 780px);
   }
 
+  .milan-detail .photo-grid .feature-diptych {
+    width: min(100%, 1700px);
+  }
+
   .milan-detail .diptych-images {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -80,6 +84,20 @@
 
   .milan-detail .photo-grid .diptych img {
     max-height: 100%;
+  }
+
+  .milan-detail .feature-diptych .diptych-images {
+    gap: clamp(18px, 2vw, 36px);
+    align-items: start;
+  }
+
+  .milan-detail .feature-diptych .diptych-images span {
+    height: auto;
+  }
+
+  .milan-detail .feature-diptych .diptych-images img {
+    width: 100%;
+    max-height: none;
   }
 
   .milan-detail figcaption,
@@ -132,6 +150,16 @@
     max-width: min(100%, 620px);
     max-height: min(66svh, 580px);
     object-fit: contain;
+  }
+
+  .milan-detail .feature-diptych .diptych-images {
+    grid-template-columns: 1fr;
+  }
+
+  .milan-detail .feature-diptych .diptych-images img {
+    width: 100%;
+    max-width: 680px;
+    max-height: none;
   }
 
   .milan-detail figcaption,

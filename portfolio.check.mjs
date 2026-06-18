@@ -195,7 +195,7 @@ for (const location of ["Garibaldi", "CityLife"]) {
   }
 }
 
-if (!/href="styles\.css\?v=20260618-milan-groups"/.test(milan) || !/src="detail-motion\.js\?v=20260618-milan-groups"/.test(milan)) {
+if (!/href="styles\.css\?v=20260618-feature-pair"/.test(milan) || !/src="detail-motion\.js\?v=20260618-feature-pair"/.test(milan)) {
   throw new Error("Milan should cache-bust the updated layout and motion assets.");
 }
 
