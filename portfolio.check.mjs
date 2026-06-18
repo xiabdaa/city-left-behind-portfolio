@@ -151,6 +151,41 @@ for (const image of removedMilanImages) {
   }
 }
 
+const newMilanImages = [
+  "DSCF1634.JPG",
+  "DSCF1639.JPG",
+  "DSCF1648.JPG",
+  "DSCF1660.JPG",
+  "DSCF1670.JPG",
+  "DSCF1676.JPG",
+  "DSCF1723.JPG",
+  "DSCF1734.jpg",
+  "DSCF1754.jpg",
+  "DSCF1765.JPG",
+  "DSCF1781.JPG",
+  "DSCF1807.JPG",
+];
+
+for (const image of newMilanImages) {
+  const references = milan.match(new RegExp(image.replace(".", "\\."), "g")) ?? [];
+  if (references.length !== 1) {
+    throw new Error(`Milan should publish ${image} exactly once; found ${references.length}.`);
+  }
+  if (!existsSync(join(root, "assets", image))) {
+    throw new Error(`New Milan asset is missing: ${image}`);
+  }
+}
+
+for (const location of ["Garibaldi", "CityLife"]) {
+  if (!new RegExp(`<h2[^>]*class="milan-section-title"[^>]*>${location}</h2>`).test(milan)) {
+    throw new Error(`Milan is missing the ${location} section heading.`);
+  }
+}
+
+if (!/href="styles\.css\?v=20260618-milan-groups"/.test(milan) || !/src="detail-motion\.js\?v=20260618-milan-groups"/.test(milan)) {
+  throw new Error("Milan should cache-bust the updated layout and motion assets.");
+}
+
 for (const [html, place, ...images] of pageRequirements) {
   if (!html.includes(place)) {
     throw new Error(`Detail page missing place name: ${place}`);
@@ -422,6 +457,14 @@ if (!/\.detail-page\s+\.detail-hero\s*{[\s\S]*?min-height:\s*calc\(100svh\s*-\s*
 
 if (!/\.detail-page\s+\.photo-grid\s*{[\s\S]*?grid-template-columns:\s*repeat\(12,\s*minmax\(0,\s*1fr\)\)/s.test(css)) {
   throw new Error("Detail photo grids should use the refined editorial grid.");
+}
+
+if (!/\.milan-detail\s+\.milan-section-heading\s*\{[\s\S]*?border-top:\s*1px\s+solid\s+var\(--line\);/s.test(css)) {
+  throw new Error("Milan location headings should use the existing editorial rule system.");
+}
+
+if (!/querySelectorAll\("\.milan-section-heading"\)/.test(detailMotion)) {
+  throw new Error("Milan location headings should join the existing scroll reveal rhythm.");
 }
 
 if (!/is-opening/.test(motion) || !/openingLift/.test(css)) {

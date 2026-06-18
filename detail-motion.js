@@ -6,6 +6,7 @@
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const revealTargets = [
     ...document.querySelectorAll(".info-grid article"),
+    ...document.querySelectorAll(".milan-section-heading"),
     ...document.querySelectorAll(".photo-grid figure"),
   ];
 
