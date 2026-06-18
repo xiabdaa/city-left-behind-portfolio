@@ -176,6 +176,19 @@ for (const image of newMilanImages) {
   }
 }
 
+const featureDiptych = milan.match(/<figure class="diptych feature-diptych">[\s\S]*?<\/figure>/)?.[0] ?? "";
+if (!featureDiptych.includes("DSCF1634.JPG") || !featureDiptych.includes("DSCF1676.JPG")) {
+  throw new Error("Milan feature diptych should contain DSCF1634 and DSCF1676.");
+}
+
+if (!/\.milan-detail \.photo-grid \.feature-diptych[\s\S]*?width:\s*min\(100%,\s*1700px\)/.test(css)) {
+  throw new Error("Milan feature diptych should use the enlarged desktop width.");
+}
+
+if (!/@media\s*\(max-width:\s*900px\)[\s\S]*?\.milan-detail \.feature-diptych \.diptych-images[\s\S]*?grid-template-columns:\s*1fr/.test(css)) {
+  throw new Error("Milan feature diptych should stack on mobile.");
+}
+
 for (const location of ["Garibaldi", "CityLife"]) {
   if (!new RegExp(`<h2[^>]*class="milan-section-title"[^>]*>${location}</h2>`).test(milan)) {
     throw new Error(`Milan is missing the ${location} section heading.`);
