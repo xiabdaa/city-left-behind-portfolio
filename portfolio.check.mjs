@@ -97,6 +97,22 @@ const pageRequirements = [
     "DSCF0505.JPG",
     "DSCF0470.JPG",
     "DSCF0495.JPG",
+    "DSCF1611.JPG",
+    "DSCF1667.JPG",
+    "DSCF1685.JPG",
+    "DSCF1693.JPG",
+    "DSCF1729.JPG",
+    "DSCF1740.JPG",
+    "DSCF1741.JPG",
+    "DSCF1742.jpg",
+    "DSCF1743.jpg",
+    "DSCF1745.JPG",
+    "DSCF1746.JPG",
+    "DSCF1749.JPG",
+    "DSCF1753.JPG",
+    "DSCF1760.JPG",
+    "DSCF1778.jpg",
+    "DSCF1802.JPG",
   ],
   [home, "Home", "DSCF1279.JPG", "DSCF1590.JPG", "DSCF1440.JPG", "DSCF0693.JPG", "DSCF0700.JPG"],
   [
@@ -173,7 +189,7 @@ if (!/class="work-image-event"\s+src="assets\/DSCF1535\.JPG"/.test(index)) {
   throw new Error("Event work card should keep the Biennale gold-searching image.");
 }
 
-const imageRefs = [...allHtml.matchAll(/src="([^"]+\.JPG)"/g)].map((match) => match[1]);
+const imageRefs = [...allHtml.matchAll(/src="([^"]+\.(?:JPG|jpg))"/g)].map((match) => match[1]);
 for (const image of imageRefs) {
   if (!existsSync(join(root, image))) {
     throw new Error(`Missing image file: ${image}`);
