@@ -97,20 +97,15 @@ const pageRequirements = [
     "DSCF0505.JPG",
     "DSCF0470.JPG",
     "DSCF0495.JPG",
-    "DSCF1611.JPG",
     "DSCF1667.JPG",
     "DSCF1685.JPG",
     "DSCF1693.JPG",
     "DSCF1729.JPG",
-    "DSCF1740.JPG",
     "DSCF1741.JPG",
-    "DSCF1742.jpg",
     "DSCF1743.jpg",
     "DSCF1745.JPG",
     "DSCF1746.JPG",
-    "DSCF1749.JPG",
     "DSCF1753.JPG",
-    "DSCF1760.JPG",
     "DSCF1778.jpg",
     "DSCF1802.JPG",
   ],
@@ -141,6 +136,20 @@ const pageRequirements = [
   ],
   [venice, "Venice", "DSCF1313.JPG", "DSCF1346.JPG", "DSCF1448.JPG", "DSCF1435.JPG", "DSCF1536.JPG", "DSCF1558.JPG"],
 ];
+
+const removedMilanImages = [
+  "DSCF1749.JPG",
+  "DSCF1760.JPG",
+  "DSCF1611.JPG",
+  "DSCF1742.jpg",
+  "DSCF1740.JPG",
+];
+
+for (const image of removedMilanImages) {
+  if (milan.includes(image)) {
+    throw new Error(`Removed Milan photograph is still published: ${image}`);
+  }
+}
 
 for (const [html, place, ...images] of pageRequirements) {
   if (!html.includes(place)) {
