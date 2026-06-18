@@ -18,6 +18,8 @@
 /* Milan is paced as an editorial photo essay rather than a tiled gallery. */
 @media (min-width: 901px) {
   .milan-detail .photo-grid {
+    --portrait-photo-width: min(600px, 50.666svh);
+    --portrait-photo-gap: clamp(24px, 2vw, 36px);
     display: block;
     padding: clamp(72px, 8vw, 150px) clamp(40px, 5vw, 92px);
     border-top: 1px solid var(--line);
@@ -47,12 +49,12 @@
     width: min(100%, 1540px);
   }
 
-  .milan-detail .photo-grid .portrait {
-    width: min(100%, 780px);
+  .milan-detail .photo-grid figure.portrait {
+    width: min(100%, var(--portrait-photo-width));
   }
 
-  .milan-detail .photo-grid .feature-diptych {
-    width: min(100%, 1700px);
+  .milan-detail .photo-grid figure.portrait-diptych {
+    width: min(100%, 1500px);
   }
 
   .milan-detail .diptych-images {
@@ -86,18 +88,24 @@
     max-height: 100%;
   }
 
-  .milan-detail .feature-diptych .diptych-images {
-    gap: clamp(18px, 2vw, 36px);
+  .milan-detail .photo-grid figure.portrait-diptych .diptych-images {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, min(var(--portrait-photo-width), calc((100% - var(--portrait-photo-gap)) / 2)))
+    );
+    justify-content: center;
+    gap: var(--portrait-photo-gap);
     align-items: start;
   }
 
-  .milan-detail .feature-diptych .diptych-images span {
+  .milan-detail .photo-grid figure.portrait-diptych .diptych-images span {
     height: auto;
   }
 
-  .milan-detail .feature-diptych .diptych-images img {
+  .milan-detail .photo-grid figure.portrait-diptych .diptych-images img,
+  .milan-detail .photo-grid figure.portrait img {
     width: 100%;
-    max-height: none;
+    max-height: min(76svh, 900px);
   }
 
   .milan-detail figcaption,
@@ -127,8 +135,8 @@
     margin-bottom: 0;
   }
 
-  .milan-detail .photo-grid .portrait {
-    width: min(100%, 620px);
+  .milan-detail .photo-grid figure.portrait {
+    width: min(100%, 680px);
   }
 
   .milan-detail .diptych-images {
@@ -152,11 +160,12 @@
     object-fit: contain;
   }
 
-  .milan-detail .feature-diptych .diptych-images {
+  .milan-detail .photo-grid figure.portrait-diptych .diptych-images {
     grid-template-columns: 1fr;
   }
 
-  .milan-detail .feature-diptych .diptych-images img {
+  .milan-detail .photo-grid figure.portrait-diptych .diptych-images img,
+  .milan-detail .photo-grid figure.portrait img {
     width: 100%;
     max-width: 680px;
     max-height: none;

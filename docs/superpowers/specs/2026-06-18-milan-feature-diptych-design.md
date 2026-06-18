@@ -1,27 +1,31 @@
-# Milan feature diptych
+# Milan portrait scale system
 
 ## Goal
 
-Place `DSCF1634.JPG` and `DSCF1676.JPG` together in one enlarged row on the Milan page so the two related Garibaldi views are easier to compare and view.
+Use the displayed `DSCF1634.JPG` and `DSCF1676.JPG` row as the Milan page reference size and spacing for every vertical pair and every single vertical photograph.
 
 ## Scope
 
-- Replace the two separate portrait figures with one shared diptych near the beginning of the Garibaldi sequence.
-- Keep `DSCF1634.JPG` on the left and `DSCF1676.JPG` on the right.
-- Give this pair a dedicated `feature-diptych` class so it can be enlarged without changing every other photograph.
-- On desktop, the photographs remain in one row and use a larger width and height than standard diptychs.
-- On screens at or below 900px, the photographs stack vertically at full available width.
-- Use one combined caption and renumber the following Milan captions continuously.
+- Keep `DSCF1634.JPG` left and `DSCF1676.JPG` right in the leading Garibaldi pair.
+- Mark every diptych whose two images are vertical with `portrait-diptych`.
+- On desktop, every vertical diptych uses a centered 1500px maximum row and a responsive gap of 24–36px.
+- Each vertical photograph is capped at 600px wide and 76% of the browser height, up to 900px tall, so the full image and caption fit in one computer viewport.
+- Every single vertical photograph uses the same responsive size as one column of a vertical diptych.
+- Reclassify the vertical `DSCF0583.JPG` photograph from `wide` to `portrait`.
+- On screens at or below 900px, vertical pairs stack at full available width.
 
 ## Non-goals
 
 - Do not add the previously discussed full-site lightbox yet.
-- Do not resize or rearrange other photographs.
+- Do not resize horizontal photographs or mixed-orientation diptychs.
 - Do not alter navigation, typography, colors, or the location grouping.
 
 ## Verification
 
-- Confirm each target filename appears exactly once in `milan.html` and both are inside the same `feature-diptych`.
-- Confirm desktop computed layout has two columns and mobile computed layout has one column.
-- Confirm the feature pair is visibly larger than a standard diptych without cropping or stretching.
+- Confirm all eight vertical pairs have the `portrait-diptych` class.
+- Confirm the four single vertical photographs use the `portrait` class.
+- Confirm vertical pairs render as two 600 × 900px columns with a 36px gap at 2048 × 1194.
+- Confirm vertical pairs and singles shrink to approximately 365 × 547px at 1280 × 720, leaving room for captions and surrounding whitespace.
+- Confirm single vertical photographs always match one vertical-pair column.
+- Confirm mobile computed layout has one column and no horizontal overflow.
 - Run repository checks, inspect the local page, publish `main`, and verify the live Milan page.

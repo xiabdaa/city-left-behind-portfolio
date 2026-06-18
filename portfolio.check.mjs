@@ -176,17 +176,55 @@ for (const image of newMilanImages) {
   }
 }
 
-const featureDiptych = milan.match(/<figure class="diptych feature-diptych">[\s\S]*?<\/figure>/)?.[0] ?? "";
+const featureDiptych = milan.match(/<figure class="[^"]*feature-diptych[^"]*">[\s\S]*?<\/figure>/)?.[0] ?? "";
 if (!featureDiptych.includes("DSCF1634.JPG") || !featureDiptych.includes("DSCF1676.JPG")) {
   throw new Error("Milan feature diptych should contain DSCF1634 and DSCF1676.");
 }
 
-if (!/\.milan-detail \.photo-grid \.feature-diptych[\s\S]*?width:\s*min\(100%,\s*1700px\)/.test(css)) {
-  throw new Error("Milan feature diptych should use the enlarged desktop width.");
+const portraitDiptychPairs = [
+  ["DSCF1634.JPG", "DSCF1676.JPG"],
+  ["DSCF1648.JPG", "DSCF1660.JPG"],
+  ["DSCF1667.JPG", "DSCF1670.JPG"],
+  ["DSCF1693.JPG", "DSCF1685.JPG"],
+  ["DSCF1741.JPG", "DSCF1743.jpg"],
+  ["DSCF1746.JPG", "DSCF1753.JPG"],
+  ["DSCF1765.JPG", "DSCF1778.jpg"],
+  ["DSCF1781.JPG", "DSCF1802.JPG"],
+];
+
+for (const [left, right] of portraitDiptychPairs) {
+  const portraitPair = [...milan.matchAll(/<figure class="[^"]*portrait-diptych[^"]*">[\s\S]*?<\/figure>/g)]
+    .map((match) => match[0])
+    .find((figure) => figure.includes(left) && figure.includes(right));
+  if (!portraitPair) {
+    throw new Error(`Milan portrait diptych should contain ${left} and ${right}.`);
+  }
 }
 
-if (!/@media\s*\(max-width:\s*900px\)[\s\S]*?\.milan-detail \.feature-diptych \.diptych-images[\s\S]*?grid-template-columns:\s*1fr/.test(css)) {
-  throw new Error("Milan feature diptych should stack on mobile.");
+for (const image of ["DSCF1723.JPG", "DSCF1754.jpg", "DSCF1807.JPG", "DSCF0583.JPG"]) {
+  if (!new RegExp(`<figure class="portrait">[\\s\\S]*?${image.replace(".", "\\.")}`).test(milan)) {
+    throw new Error(`Milan single portrait should use the portrait layout: ${image}.`);
+  }
+}
+
+if (!/\.milan-detail \.photo-grid figure\.portrait-diptych[\s\S]*?width:\s*min\(100%,\s*1500px\)/.test(css)) {
+  throw new Error("Milan portrait diptychs should share the reference width.");
+}
+
+if (!/--portrait-photo-width:\s*min\(600px,\s*50\.666svh\)/.test(css)) {
+  throw new Error("Milan portrait photographs should scale to fit a desktop viewport.");
+}
+
+if (!/\.milan-detail \.photo-grid figure\.portrait[\s\S]*?width:\s*min\(100%,\s*var\(--portrait-photo-width\)\)/.test(css)) {
+  throw new Error("Milan single portraits should match one fitted portrait column.");
+}
+
+if (!/\.milan-detail \.photo-grid figure\.portrait-diptych \.diptych-images img,[\s\S]*?figure\.portrait img[\s\S]*?max-height:\s*min\(76svh,\s*900px\)/.test(css)) {
+  throw new Error("Milan portraits should fit fully inside the desktop viewport.");
+}
+
+if (!/@media\s*\(max-width:\s*900px\)[\s\S]*?\.milan-detail \.photo-grid figure\.portrait-diptych \.diptych-images[\s\S]*?grid-template-columns:\s*1fr/.test(css)) {
+  throw new Error("Milan portrait diptychs should stack on mobile.");
 }
 
 for (const location of ["Garibaldi", "CityLife"]) {
@@ -195,7 +233,7 @@ for (const location of ["Garibaldi", "CityLife"]) {
   }
 }
 
-if (!/href="styles\.css\?v=20260618-feature-pair"/.test(milan) || !/src="detail-motion\.js\?v=20260618-feature-pair"/.test(milan)) {
+if (!/href="styles\.css\?v=20260618-portrait-fit"/.test(milan) || !/src="detail-motion\.js\?v=20260618-portrait-fit"/.test(milan)) {
   throw new Error("Milan should cache-bust the updated layout and motion assets.");
 }
 
