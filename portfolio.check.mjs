@@ -215,11 +215,15 @@ if (!/--portrait-photo-width:\s*min\(600px,\s*50\.666svh\)/.test(css)) {
   throw new Error("Milan portrait photographs should scale to fit a desktop viewport.");
 }
 
+if (!/--portrait-photo-gap:\s*clamp\(32px,\s*3vw,\s*56px\)/.test(css)) {
+  throw new Error("Portrait pairs should use the wider approved gap.");
+}
+
 if (!/\.milan-detail \.photo-grid figure\.portrait[\s\S]*?width:\s*min\(100%,\s*var\(--portrait-photo-width\)\)/.test(css)) {
   throw new Error("Milan single portraits should match one fitted portrait column.");
 }
 
-if (!/\.milan-detail \.photo-grid figure\.portrait-diptych \.diptych-images img,[\s\S]*?figure\.portrait img[\s\S]*?max-height:\s*min\(76svh,\s*900px\)/.test(css)) {
+if (!/\.milan-detail \.photo-grid figure\.portrait-diptych \.diptych-images img,[\s\S]*?figure\.portrait img[\s\S]*?width:\s*auto;[\s\S]*?max-width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?max-height:\s*min\(76svh,\s*900px\)/.test(css)) {
   throw new Error("Milan portraits should fit fully inside the desktop viewport.");
 }
 
@@ -233,8 +237,57 @@ for (const location of ["Garibaldi", "CityLife"]) {
   }
 }
 
-if (!/href="styles\.css\?v=20260618-portrait-fit"/.test(milan) || !/src="detail-motion\.js\?v=20260618-portrait-fit"/.test(milan)) {
+if (!/href="styles\.css\?v=20260619-portrait-system"/.test(milan) || !/src="detail-motion\.js\?v=20260619-portrait-system"/.test(milan)) {
   throw new Error("Milan should cache-bust the updated layout and motion assets.");
+}
+
+const sitePortraitAssignments = [
+  [home, "Home", "DSCF1279.JPG", "portrait-pair-left"],
+  [home, "Home", "DSCF1440.JPG", "portrait-pair-right"],
+  [event, "Event", "DSCF0200.JPG", "portrait-pair-left"],
+  [event, "Event", "DSCF0484.JPG", "portrait-pair-right"],
+  [event, "Event", "DSCF0445.JPG", "portrait-pair-left"],
+  [event, "Event", "DSCF1295.JPG", "portrait-pair-right"],
+  [jeju, "Korean Jeju Island", "DSCF1021.JPG", "portrait-single"],
+  [venice, "Venice", "DSCF1313.JPG", "portrait-pair-left"],
+  [venice, "Venice", "DSCF1343.JPG", "portrait-pair-right"],
+  [venice, "Venice", "DSCF1536.JPG", "portrait-pair-left"],
+  [venice, "Venice", "DSCF1558.JPG", "portrait-pair-right"],
+  [venice, "Venice", "DSCF1346.JPG", "portrait-pair-left"],
+  [venice, "Venice", "DSCF1435.JPG", "portrait-pair-right"],
+];
+
+for (const [html, place, image, className] of sitePortraitAssignments) {
+  const figure = [...html.matchAll(/<figure(?: class="([^"]*)")?>[\s\S]*?<\/figure>/g)]
+    .find((match) => match[0].includes(image));
+  const classes = figure?.[1]?.split(/\s+/) ?? [];
+  if (!classes.includes("portrait") || !classes.includes(className)) {
+    throw new Error(`${place} should place ${image} in the ${className} portrait layout.`);
+  }
+}
+
+const eventPortraitDiptych = [...event.matchAll(/<figure class="([^"]*)">[\s\S]*?<\/figure>/g)]
+  .find((match) => match[0].includes("DSCF1704.JPG") && match[0].includes("DSCF1535.JPG"));
+if (!eventPortraitDiptych?.[1]?.split(/\s+/).includes("portrait-diptych")) {
+  throw new Error("Event vertical pair should use the portrait-diptych layout.");
+}
+
+if (!/class="portrait-cell"[\s\S]*?DSCF1795\.JPG/.test(event)) {
+  throw new Error("Event mixed diptych should mark its vertical photograph.");
+}
+
+if (!/\.detail-page:not\(\.milan-detail\) \.photo-grid figure\.portrait-pair-left[\s\S]*?\.portrait-pair-right/.test(css)) {
+  throw new Error("Other detail pages should share the portrait pair spacing system.");
+}
+
+if (!/\.detail-page:not\(\.milan-detail\) \.photo-grid figure\.portrait-diptych \.diptych-images img,[\s\S]*?\.portrait-cell img[\s\S]*?width:\s*auto;[\s\S]*?max-width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?max-height:\s*min\(76svh,\s*900px\)/.test(css)) {
+  throw new Error("Site-wide portrait images should preserve their natural aspect ratios.");
+}
+
+for (const html of [home, event, jeju, venice]) {
+  if (!/href="styles\.css\?v=20260619-portrait-system"/.test(html) || !/src="detail-motion\.js\?v=20260619-portrait-system"/.test(html)) {
+    throw new Error("All detail pages should cache-bust the site-wide portrait system.");
+  }
 }
 
 for (const [html, place, ...images] of pageRequirements) {

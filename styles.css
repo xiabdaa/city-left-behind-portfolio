@@ -18,8 +18,6 @@
 /* Milan is paced as an editorial photo essay rather than a tiled gallery. */
 @media (min-width: 901px) {
   .milan-detail .photo-grid {
-    --portrait-photo-width: min(600px, 50.666svh);
-    --portrait-photo-gap: clamp(24px, 2vw, 36px);
     display: block;
     padding: clamp(72px, 8vw, 150px) clamp(40px, 5vw, 92px);
     border-top: 1px solid var(--line);
@@ -104,7 +102,9 @@
 
   .milan-detail .photo-grid figure.portrait-diptych .diptych-images img,
   .milan-detail .photo-grid figure.portrait img {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
+    height: auto;
     max-height: min(76svh, 900px);
   }
 
@@ -3456,6 +3456,8 @@ figcaption {
 }
 
 .detail-page .photo-grid {
+  --portrait-photo-width: min(600px, 50.666svh);
+  --portrait-photo-gap: clamp(32px, 3vw, 56px);
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 0;
@@ -3547,6 +3549,77 @@ figcaption {
   font-size: 12px;
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+@media (min-width: 901px) {
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-left,
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-right {
+    grid-column: span 6;
+    width: min(100%, var(--portrait-photo-width));
+    padding: clamp(48px, 6vw, 96px) 0 0;
+    border-right: 0;
+    overflow: visible;
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-left {
+    justify-self: end;
+    margin-right: calc(var(--portrait-photo-gap) / 2);
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-right {
+    justify-self: start;
+    margin-left: calc(var(--portrait-photo-gap) / 2);
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-single {
+    grid-column: span 12;
+    width: min(100%, var(--portrait-photo-width));
+    padding: clamp(48px, 6vw, 96px) 0 0;
+    justify-self: center;
+    border-right: 0;
+    overflow: visible;
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-left img,
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-pair-right img,
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-single img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: min(76svh, 900px);
+    object-fit: contain;
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-diptych {
+    grid-column: span 12;
+    padding: clamp(48px, 6vw, 96px) 0 0;
+    border-right: 0;
+    overflow: visible;
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-diptych .diptych-images {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, min(var(--portrait-photo-width), calc((100% - var(--portrait-photo-gap)) / 2)))
+    );
+    justify-content: center;
+    gap: var(--portrait-photo-gap);
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-diptych .diptych-images span {
+    height: auto;
+    padding: 0;
+    border-right: 0;
+  }
+
+  .detail-page:not(.milan-detail) .photo-grid figure.portrait-diptych .diptych-images img,
+  .detail-page:not(.milan-detail) .photo-grid .portrait-cell img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: min(76svh, 900px);
+    object-fit: contain;
+  }
 }
 
 @media (min-width: 901px) {
