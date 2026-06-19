@@ -17,7 +17,7 @@
 
 - [ ] **Step 1: Add a failing Event check**
 
-Require the numbered Event photo grid to omit `DSCF0200.JPG` while keeping it as the hero, and contain `DSCF0484.JPG`, `DSCF0445.JPG`, and `DSCF1295.JPG` inside one `triple-row` figure.
+Require the numbered Event photo grid to omit `DSCF1295.JPG` and contain `DSCF0200.JPG`, `DSCF0484.JPG`, and `DSCF0445.JPG` inside one `triple-row` wrapper.
 
 - [ ] **Step 2: Add a failing Jeju check**
 
@@ -27,7 +27,7 @@ Require `jeju.html` to contain `DSCF0813.JPG` followed by `DSCF1014.JPG` inside 
 
 Run: `node portfolio.check.mjs`
 
-Expected: FAIL because the new wrappers do not yet exist and Event still references `DSCF0200.JPG`.
+Expected: FAIL because the new wrappers do not yet exist and Event still references `DSCF1295.JPG`.
 
 ### Task 2: Implement the two rows
 
@@ -38,7 +38,7 @@ Expected: FAIL because the new wrappers do not yet exist and Event still referen
 
 - [ ] **Step 1: Replace the Event opening figures**
 
-Remove `DSCF0200.JPG`, create one `triple-row` figure containing the three remaining opening images and their individual captions, and renumber later Event captions sequentially.
+Remove `DSCF1295.JPG`, create one `triple-row` wrapper containing `DSCF0200.JPG`, `DSCF0484.JPG`, and `DSCF0445.JPG` with their individual captions, and renumber later Event captions sequentially.
 
 - [ ] **Step 2: Pair the two Jeju photographs**
 
@@ -50,7 +50,7 @@ Use three desktop columns for `.triple-row-images`, two desktop columns for `.pa
 
 - [ ] **Step 4: Cache-bust the updated pages**
 
-Update Event and Jeju stylesheet and motion query strings to `20260619-editorial-rows`.
+Use `20260619-event-photo-correction` for Event and keep `20260619-editorial-rows` for Jeju.
 
 - [ ] **Step 5: Run automated checks**
 

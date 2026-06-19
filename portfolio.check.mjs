@@ -116,7 +116,6 @@ const pageRequirements = [
     "DSCF0200.JPG",
     "DSCF0484.JPG",
     "DSCF0445.JPG",
-    "DSCF1295.JPG",
     "DSCF1535.JPG",
     "DSCF1710.JPG",
     "DSCF1704.JPG",
@@ -263,12 +262,12 @@ for (const [html, place, image, className] of sitePortraitAssignments) {
 }
 
 const eventPhotoGrid = event.match(/<section class="photo-grid"[\s\S]*?<\/section>/)?.[0] ?? "";
-if (eventPhotoGrid.includes("DSCF0200.JPG")) {
-  throw new Error("Event should remove DSCF0200.JPG from the numbered photograph grid.");
+if (eventPhotoGrid.includes("DSCF1295.JPG")) {
+  throw new Error("Event should remove the red installation DSCF1295.JPG from the numbered photograph grid.");
 }
 
 const eventTripleRow = event.match(/<div class="editorial-row triple-row">[\s\S]*?<\/div>/)?.[0] ?? "";
-const eventRowImages = ["DSCF0484.JPG", "DSCF0445.JPG", "DSCF1295.JPG"];
+const eventRowImages = ["DSCF0200.JPG", "DSCF0484.JPG", "DSCF0445.JPG"];
 if (!eventRowImages.every((image) => eventTripleRow.includes(image))) {
   throw new Error("Event should place its three opening photographs in one triple row.");
 }
@@ -316,10 +315,12 @@ for (const html of [home, venice]) {
   }
 }
 
-for (const html of [event, jeju]) {
-  if (!/href="styles\.css\?v=20260619-editorial-rows"/.test(html) || !/src="detail-motion\.js\?v=20260619-editorial-rows"/.test(html)) {
-    throw new Error("Event and Jeju should cache-bust the editorial row layout.");
-  }
+if (!/href="styles\.css\?v=20260619-event-photo-correction"/.test(event) || !/src="detail-motion\.js\?v=20260619-event-photo-correction"/.test(event)) {
+  throw new Error("Event should cache-bust the corrected editorial row.");
+}
+
+if (!/href="styles\.css\?v=20260619-editorial-rows"/.test(jeju) || !/src="detail-motion\.js\?v=20260619-editorial-rows"/.test(jeju)) {
+  throw new Error("Jeju should cache-bust the editorial row layout.");
 }
 
 for (const [html, place, ...images] of pageRequirements) {

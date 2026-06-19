@@ -4,8 +4,8 @@
 
 Make two focused editorial changes without altering the rest of the portfolio:
 
-- Remove `DSCF0200.JPG` from Event's numbered photograph grid while keeping it as the page hero.
-- Place Event's remaining opening photographs `DSCF0484.JPG`, `DSCF0445.JPG`, and `DSCF1295.JPG` in one three-column row.
+- Remove the red installation `DSCF1295.JPG` from Event's numbered photograph grid.
+- Place Event photographs `DSCF0200.JPG`, `DSCF0484.JPG`, and `DSCF0445.JPG` in one three-column row.
 - Place Jeju photographs `DSCF0813.JPG` and `DSCF1014.JPG` in one two-column row, with the bicycle first and the mountain buses second.
 
 ## Layout
@@ -23,7 +23,7 @@ Make two focused editorial changes without altering the rest of the portfolio:
 
 ## Verification
 
-- Automated checks confirm Event's numbered grid no longer references `DSCF0200.JPG` and contains the three specified opening images in one row.
+- Automated checks confirm Event's numbered grid no longer references `DSCF1295.JPG` and contains the three specified opening images in one row.
 - Automated checks confirm Jeju contains `DSCF0813.JPG` and `DSCF1014.JPG` in one row and in that order.
 - Desktop and mobile browser checks confirm correct columns, natural image ratios, and no horizontal overflow.
 - GitHub Pages is verified after deployment.
