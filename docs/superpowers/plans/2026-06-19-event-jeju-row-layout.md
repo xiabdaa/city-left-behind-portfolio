@@ -17,7 +17,7 @@
 
 - [ ] **Step 1: Add a failing Event check**
 
-Require `event.html` to omit `DSCF0200.JPG` and contain `DSCF0484.JPG`, `DSCF0445.JPG`, and `DSCF1295.JPG` inside one `triple-row` figure.
+Require the numbered Event photo grid to omit `DSCF0200.JPG` while keeping it as the hero, and contain `DSCF0484.JPG`, `DSCF0445.JPG`, and `DSCF1295.JPG` inside one `triple-row` figure.
 
 - [ ] **Step 2: Add a failing Jeju check**
 
@@ -42,7 +42,7 @@ Remove `DSCF0200.JPG`, create one `triple-row` figure containing the three remai
 
 - [ ] **Step 2: Pair the two Jeju photographs**
 
-Replace the separate `DSCF1014.JPG` and `DSCF0813.JPG` figures with one `paired-row` figure ordered bicycle first, buses second.
+Replace the separate `DSCF1014.JPG` and `DSCF0813.JPG` figures with one `paired-row` figure ordered bicycle first, buses second; renumber the bicycle, buses, and coast captions as `06`, `07`, and `08`.
 
 - [ ] **Step 3: Add responsive row CSS**
 

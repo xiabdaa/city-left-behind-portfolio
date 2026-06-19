@@ -244,10 +244,6 @@ if (!/href="styles\.css\?v=20260619-portrait-system"/.test(milan) || !/src="deta
 const sitePortraitAssignments = [
   [home, "Home", "DSCF1279.JPG", "portrait-pair-left"],
   [home, "Home", "DSCF1440.JPG", "portrait-pair-right"],
-  [event, "Event", "DSCF0200.JPG", "portrait-pair-left"],
-  [event, "Event", "DSCF0484.JPG", "portrait-pair-right"],
-  [event, "Event", "DSCF0445.JPG", "portrait-pair-left"],
-  [event, "Event", "DSCF1295.JPG", "portrait-pair-right"],
   [jeju, "Korean Jeju Island", "DSCF1021.JPG", "portrait-single"],
   [venice, "Venice", "DSCF1313.JPG", "portrait-pair-left"],
   [venice, "Venice", "DSCF1343.JPG", "portrait-pair-right"],
@@ -264,6 +260,36 @@ for (const [html, place, image, className] of sitePortraitAssignments) {
   if (!classes.includes("portrait") || !classes.includes(className)) {
     throw new Error(`${place} should place ${image} in the ${className} portrait layout.`);
   }
+}
+
+const eventPhotoGrid = event.match(/<section class="photo-grid"[\s\S]*?<\/section>/)?.[0] ?? "";
+if (eventPhotoGrid.includes("DSCF0200.JPG")) {
+  throw new Error("Event should remove DSCF0200.JPG from the numbered photograph grid.");
+}
+
+const eventTripleRow = event.match(/<div class="editorial-row triple-row">[\s\S]*?<\/div>/)?.[0] ?? "";
+const eventRowImages = ["DSCF0484.JPG", "DSCF0445.JPG", "DSCF1295.JPG"];
+if (!eventRowImages.every((image) => eventTripleRow.includes(image))) {
+  throw new Error("Event should place its three opening photographs in one triple row.");
+}
+if (!(eventRowImages[0] && eventTripleRow.indexOf(eventRowImages[0]) < eventTripleRow.indexOf(eventRowImages[1]) && eventTripleRow.indexOf(eventRowImages[1]) < eventTripleRow.indexOf(eventRowImages[2]))) {
+  throw new Error("Event triple row should preserve the approved photograph order.");
+}
+
+const jejuPairedRow = jeju.match(/<div class="editorial-row paired-row">[\s\S]*?<\/div>/)?.[0] ?? "";
+if (!jejuPairedRow.includes("DSCF0813.JPG") || !jejuPairedRow.includes("DSCF1014.JPG")) {
+  throw new Error("Jeju should pair the bicycle and mountain-bus photographs.");
+}
+if (jejuPairedRow.indexOf("DSCF0813.JPG") > jejuPairedRow.indexOf("DSCF1014.JPG")) {
+  throw new Error("Jeju paired row should place the bicycle before the mountain buses.");
+}
+
+if (!/\.detail-page \.photo-grid \.editorial-row[\s\S]*?grid-column:\s*1\s*\/\s*-1/.test(css) || !/\.triple-row[\s\S]*?grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/.test(css) || !/\.paired-row[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/.test(css)) {
+  throw new Error("Editorial rows should use three Event columns and two Jeju columns on desktop.");
+}
+
+if (!/@media\s*\(max-width:\s*900px\)[\s\S]*?\.detail-page \.photo-grid \.editorial-row[\s\S]*?grid-template-columns:\s*1fr/.test(css)) {
+  throw new Error("Editorial rows should stack into one column on mobile.");
 }
 
 const eventPortraitDiptych = [...event.matchAll(/<figure class="([^"]*)">[\s\S]*?<\/figure>/g)]
@@ -284,9 +310,15 @@ if (!/\.detail-page:not\(\.milan-detail\) \.photo-grid figure\.portrait-diptych 
   throw new Error("Site-wide portrait images should preserve their natural aspect ratios.");
 }
 
-for (const html of [home, event, jeju, venice]) {
+for (const html of [home, venice]) {
   if (!/href="styles\.css\?v=20260619-portrait-system"/.test(html) || !/src="detail-motion\.js\?v=20260619-portrait-system"/.test(html)) {
     throw new Error("All detail pages should cache-bust the site-wide portrait system.");
+  }
+}
+
+for (const html of [event, jeju]) {
+  if (!/href="styles\.css\?v=20260619-editorial-rows"/.test(html) || !/src="detail-motion\.js\?v=20260619-editorial-rows"/.test(html)) {
+    throw new Error("Event and Jeju should cache-bust the editorial row layout.");
   }
 }
 
